@@ -1,0 +1,26 @@
+---
+- name: DEPLOY AS3 DEC
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+
+  vars_files:
+    - ../Creds/big_creds.yaml
+
+  tasks:
+  - name: Create an F5 AS3 Declaration
+  uri:
+    url: https://3.10.147.142/mgmt/shared/appsvcs/declare/
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_pass }}"
+    method: POST
+    body: "{{ lookup('file','as3_declaration.json') }}"
+    force_basic_auth: yes
+    validate_certs: no
+    status_code: 200
+    body_format: json
+...
+
+
